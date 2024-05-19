@@ -276,7 +276,9 @@ public class GUI
 
         Log.error(UIManager.getSystemLookAndFeelClassName());
         String lookAndFeel = null;
-        lookAndFeel = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
+        // lookAndFeel = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
+        // lookAndFeel = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
+        lookAndFeel = "javax.swing.plaf.metal.MetalLookAndFeel";
         UIManager.setLookAndFeel(lookAndFeel);
         // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
@@ -356,8 +358,8 @@ public class GUI
       fontSize2 = fontSize + 2;
     } else {
       fontName = "SansSerif";
-      fontSize = 11;
-      fontSize2 = 11;
+      fontSize = 13;
+      fontSize2 = 13;
     }
 
     final String fixedFont = "Lucida Sans Typewriter";
@@ -400,7 +402,7 @@ public class GUI
     // compressed, and reliable in at least that everyone's read it
     // countless times.
 
-    ContentFace = new GUI.Face("Arial", Font.PLAIN, 14, null); // shows underscores below underline
+    ContentFace = new GUI.Face("Arial", Font.PLAIN, 16, null); // shows underscores below underline
     // ContentFace = new GUI.Face("Verdana", Font.PLAIN, 13, null); // underline
     // hides underscores
 
@@ -863,12 +865,12 @@ public class GUI
     /*
      * if (DEBUG.IO && DEBUG.META) Log.debug("icon request: " + ext + "@" +
      * sizeRequest);
-     * 
+     *
      * if (ext == null)
      * return null;
-     * 
+     *
      * ext = ext.toLowerCase();
-     * 
+     *
      * if (ext.equals(Resource.EXTENSION_VUE)) {
      * final String key = "vueIcon" + sizeRequest;
      * Image image = IconCache.get(key);
@@ -881,12 +883,12 @@ public class GUI
      * return image;
      * } else if (ext.equals("rss"))
      * return RSSIcon;
-     * 
+     *
      * if (ext == Resource.EXTENSION_HTTP)
      * ext = "htm";
-     * 
+     *
      * if (Util.isMacPlatform() && !VUE.isApplet()) {
-     * 
+     *
      * if (false && Util.isMacLeopard() && Util.getJavaVersion() > 1.5) {
      * ; // ShellFolder/FileSystemView method still doesn't work
      * } else {
@@ -895,7 +897,7 @@ public class GUI
      * else
      * return null;
      * }
-     * 
+     *
      * // Image image = tufts.macosx.MacOSX.getIconForExtension(ext, sizeRequest);
      * // // May need an unknown type for each likely sizeRequest
      * // if ((image == null || image == UNKNOWN_TYPE) && ("readme".equals(ext) ||
@@ -903,16 +905,16 @@ public class GUI
      * // image = tufts.macosx.MacOSX.getIconForExtension("txt", sizeRequest);
      * // return image;
      * }
-     * 
-     * 
+     *
+     *
      * //---------------------------------------------------------------------------
      * --
      * // Below happens for non-Mac platforms only: Windows, Linux, (etc?)
      * //---------------------------------------------------------------------------
      * --
-     * 
+     *
      * Image image = IconCache.get(ext, sizeRequest);
-     * 
+     *
      * if (image != null) {
      * if (DEBUG.IO) Log.debug(String.format("cache hit %8s: %s", ext + "." +
      * sizeRequest, Util.tags(image)));
@@ -922,34 +924,34 @@ public class GUI
      * return image;
      * }
      * }
-     * 
+     *
      * // proceed the SLOW way, but all we can do until we have jdic/jdesktop and
      * they actually handle this for us:
-     * 
+     *
      * File file = null;
-     * 
+     *
      * try {
-     * 
+     *
      * if ("dir".equals(ext)) {
      * file = new File(TmpIconDir); // a guaranteed vanilla directory we should be
      * able to find
      * if (DEBUG.IO) Log.debug(" trying " + file);
      * } else {
      * file = new File(TmpIconDir + File.separator + "vueIcon." + ext);
-     * 
+     *
      * if (DEBUG.IO) Log.debug(" trying " + file);
-     * 
+     *
      * if (file.createNewFile())
      * if (DEBUG.Enabled) Log.debug("created " + file);
      * // we deliberately leave the above files behind, so that hopefully
      * // future runs of VUE on this machine will be faster
      * }
-     * 
+     *
      * // You MUST have found or created a real, actual file for ShellFolder
      * // to work.
      * if (cShellFolder == null)
      * cShellFolder = Class.forName("sun.awt.shell.ShellFolder");
-     * 
+     *
      * if (cShellFolder !=null)
      * {
      * if (sizeRequest <= 24) {
@@ -957,16 +959,16 @@ public class GUI
      * sf = getShellFolderMethod().invoke(null, new Object[]{file});
      * image = (Image) getIconMethod().invoke(sf, new
      * Object[]{Boolean.FALSE});//shellFolder.getIcon(SMALL_ICON);
-     * 
+     *
      * small = image;
      * large = sf; //shellFolder; // can be fetched later
-     * 
+     *
      * } else {
      * //true
      * sf = getShellFolderMethod().invoke(null, new Object[]{file});
      * image = (Image) getIconMethod().invoke(sf, new
      * Object[]{Boolean.TRUE});//shellFolder.getIcon(LARGE_ICON);
-     * 
+     *
      * small = sf;//shellFolder; // can be fetched later
      * large = image;
      * }
@@ -974,19 +976,19 @@ public class GUI
      * else
      * {
      * //you're not on a Sun JVM and not on a mac at this point.
-     * 
+     *
      * small = null;
      * large = null;
-     * 
+     *
      * }
-     * 
+     *
      * // We assume here that on Windows platforms, small is always 16x16, and large
      * is always 32x32
      * // See IconCache code that also depends on this.
-     * 
+     *
      * IconCache.put(ext, 16, small);
      * IconCache.put(ext, 32, large);
-     * 
+     *
      * if (image != null) {
      * if (image.getHeight(null) != sizeRequest) {
      * if (DEBUG.IO || DEBUG.IMAGE)
@@ -1002,11 +1004,11 @@ public class GUI
      * } else {
      * throw new NullPointerException("no Image");
      * }
-     * 
+     *
      * } catch (Throwable t) {
      * //Log.warn("could not get Icon for filetype: " + ext + "." + sizeRequest +
      * "; ", t);
-     * 
+     *
      * Icon fsIcon = null;
      * try {
      * // debug: does this return us anything interesting? java 1.5 default impl
@@ -1016,13 +1018,13 @@ public class GUI
      * javax.swing.filechooser.FileSystemView.getFileSystemView().getSystemIcon(file
      * );
      * } catch (Throwable _) {}
-     * 
+     *
      * Log.warn("could not get Icon for filetype: " + ext + "." + sizeRequest + "; "
      * + t + "; fsIcon=" + fsIcon);
-     * 
+     *
      * IconCache.put(ext, sizeRequest, null);
      * }
-     * 
+     *
      * return image;
      */
   }
@@ -1159,7 +1161,7 @@ public class GUI
 
   /**
    * Convience method.
-   * 
+   *
    * @return a new VUE application DockWindow
    * @param content - a component to put in the dock window
    */
@@ -1285,10 +1287,10 @@ public class GUI
    * private static Cursor oldRootCursor;
    * private static Cursor oldViewerCursor;
    * private static tufts.vue.MapViewer waitedViewer;
-   * 
+   *
    * private static synchronized void activateWaitCursor(final Component
    * component) {
-   * 
+   *
    * if (oldRootCursor != null) {
    * if (DEBUG.FOCUS) out("multiple wait-cursors: already have " + oldRootCursor +
    * "\n");
@@ -1308,7 +1310,7 @@ public class GUI
    * root.setCursor(CURSOR_WAIT);
    * }
    * }
-   * 
+   *
    * private static void _clearWaitCursor(Component component) {
    * //out("restoring old cursor " + oldRootCursor + "\n");
    * if (oldRootCursor == null)
@@ -1601,8 +1603,8 @@ public class GUI
    * public boolean processKeyBindingUp(KeyStroke ks, KeyEvent e, int condition,
    * boolean pressed);
    * }
-   * 
-   * 
+   *
+   *
    * We need this to hand off command keystrokes to the VUE menu bar. This isn't
    * as
    * important given the way do things in java 1.5, but we really need in 1.4 and
@@ -1614,7 +1616,7 @@ public class GUI
    *
    * Allowing this in java 1.5 means we can access the VueMenuBar
    * shortcuts even while editing a text field.
-   * 
+   *
    * // todo: we could probably have our FocusManager handle this for us, which
    * may be a bit cleaner
    * // todo: or, we could just get the input map from menu bar and invoke the
@@ -1629,40 +1631,40 @@ public class GUI
    * // So only if any modifier bits are on (except SHIFT), do we attempt to
    * // send the KeyStroke to the JMenuBar to check against any accelerators
    * there.
-   * 
+   *
    * final int PROCESS_MASK =
    * InputEvent.CTRL_MASK |
    * InputEvent.META_MASK |
    * InputEvent.ALT_MASK |
    * InputEvent.ALT_GRAPH_MASK;
-   * 
+   *
    * // On Mac java 1.4.2, and on the PC (TODO: also java 1.5 or only java 1.4.2?)
    * // we have to manually redirect the key events to the main VueMenuBar.
-   * 
+   *
    * if ((e.getModifiers() & PROCESS_MASK) == 0 && !e.isActionKey())
    * return relayer.processKeyBindingUp(ks, e, condition, pressed);
-   * 
+   *
    * if (DEBUG.TOOL||DEBUG.FOCUS) out(name(relayer) + " processKeyBinding [" + ks
    * + "] condition="+condition);
-   * 
+   *
    * // processKeyBinding never appears to return true, and this key event never
    * // gets marked as consumed (I guess we'd have to listen for that in our text
    * fields
    * // and consume it), so we're always passing the character up the tree...
-   * 
+   *
    * if (relayer.processKeyBindingUp(ks, e, condition, pressed) || e.isConsumed())
    * return true;
-   * 
+   *
    * // Condition usually comes in as WHEN_ANCESTOR_OF_FOCUSED_COMPONENT (1),
    * which doesn't do it for us.
    * // We need condition (2): WHEN_IN_FOCUSED_WINDOW
-   * 
+   *
    * int newCondition = JComponent.WHEN_IN_FOCUSED_WINDOW;
-   * 
+   *
    * if (DEBUG.TOOL||DEBUG.FOCUS)
    * out(name(relayer) + " processKeyBinding [" + ks +
    * "] handing to VueMenuBar w/condition=" + newCondition);
-   * 
+   *
    * try {
    * return false; //return VUE.getJMenuBar().doProcessKeyBinding(ks, e,
    * newCondition, pressed);
@@ -3254,7 +3256,7 @@ public class GUI
     }
 
     /**
-     * 
+     *
      * Intercept MouseWheelEvents going to the nearest JScrollPane ancestor of
      * Component "overriding" by sending them to "intercept" first. The intercepting
      * component should consume the event for those it wishes to override, otherwise
@@ -3504,7 +3506,7 @@ public class GUI
   /**
    * Style is one of: "segmented", "segmentedCapsule", "segmentedTextured",
    * "segmentedRoundRect"
-   * 
+   *
    * @see https://developer.apple.com/library/mac/#technotes/tn2007/tn2196.html
    *
    *      For each button, the clientProperty with key "segment.value" will hold
@@ -3588,13 +3590,13 @@ public class GUI
    * java.beans.PropertyChangeListener
    * {
    * private PropertyChangeHandler() {}
-   * 
+   *
    * private boolean mIgnoreActionEvents = false;
-   * 
+   *
    * public void propertyChange(java.beans.PropertyChangeEvent e) {
    * if (DEBUG.Enabled) out("propertyChange: " + e);
    * }
-   * 
+   *
    * public void actionPerformed(java.awt.event.ActionEvent e) {
    * if (mIgnoreActionEvents) {
    * if (DEBUG.TOOL) System.out.println(this + " ActionEvent ignored: " + e);
