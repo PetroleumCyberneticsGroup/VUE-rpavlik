@@ -3,9 +3,9 @@
  * Educational Community License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may
  * obtain a copy of the License at
- * 
+ *
  * http://www.osedu.org/licenses/ECL-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an "AS IS"
  * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
@@ -31,7 +31,7 @@ public class OntType implements java.io.Serializable {
     private Style style;
 
     private String baseURL;
-    
+
     // for VUE2.0, unspecified styles always default to Node
     // todo: create vue resource for this choice
     // todo2: guess some reasonable defaults from ontology and save
@@ -39,17 +39,17 @@ public class OntType implements java.io.Serializable {
     private boolean defaultsToNode = true;
     /** Creates a new instance of OntType */
     public OntType() { }
-   
+
     public void setDefaultsToNode(boolean set)
     {
         defaultsToNode = set;
     }
-    
+
     public boolean defaultsToNode()
     {
         return defaultsToNode;
     }
-   
+
     public void setId(String id) {
         this.id = id;
     }
@@ -62,14 +62,14 @@ public class OntType implements java.io.Serializable {
     public String getLabel() {
         return this.label;
     }
-   
+
     public void setComment(String comment) {
         this.comment = comment;
     }
     public String getComment() {
         return this.comment;
     }
-    
+
     public String getBase() {
         return this.baseURL;
     }
@@ -81,7 +81,7 @@ public class OntType implements java.io.Serializable {
         b.append(label);
         return b.toString();
     }
-    
+
 
     /** the given url key must end with an exact case-sensitive match to this.label -- this.id is ignored */
     public boolean matchesKey(String key) {
@@ -93,7 +93,7 @@ public class OntType implements java.io.Serializable {
             localPart < key.length() - 1 &&
             key.substring(localPart + 1).equals(label);
     }
-    
+
     public void setBase(final String base) {
         this.base = base;
         // NOTE: this has never done anything for vra_core_3.rdf, so the base ends up being the full filename to
@@ -105,19 +105,20 @@ public class OntType implements java.io.Serializable {
             baseURL = VueResources.local("metadata.vue.url");
         else if (base.contains("custom.rdfs"))
             // return "file:///Users/dhelle01/.vue_2/custom.rdfs";
-            baseURL = "http://vue.tufts.edu/custom.rdfs";
+            // baseURL = "http://vue.tufts.edu/custom.rdfs";
+            baseURL = "";
         else
             baseURL = base;
     }
-    
+
     public Style getStyle() {
         return this.style;
     }
-    
+
     public void setStyle(Style style) {
         this.style = style;
     }
-    
+
     public String toString() {
         final String xid = (id == null ? "" : id);
         if (baseURL != base)
@@ -126,5 +127,5 @@ public class OntType implements java.io.Serializable {
             return base+" id="+ id + (!xid.equals(label) ? (" label=" + label) : "");
         //return "Base: "+base+" name: "+ id+" Style: "+style;
     }
-            
+
 }

@@ -3,9 +3,9 @@
  * Educational Community License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may
  * obtain a copy of the License at
- * 
+ *
  * http://www.osedu.org/licenses/ECL-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an "AS IS"
  * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
@@ -35,29 +35,29 @@ import tufts.vue.LWComponent.Order;
 /**
  * @version $Revision: 1.39 $ / $Date: 2010-03-29 13:48:48 $ / $Author: mike $ *
  * @author Jay Briedis
- * 
+ *
  * Major revision: 2/17/09 -MK
  * The image map now uses a bunch of JQuery files stored on vue.tufts.edu, to enhance
  * the image map a bit.  The map itself now supports nested nodes, and groups for the first time.
- * Intersecting areas of the image map are priortized by what appears first in this list, 
+ * Intersecting areas of the image map are priortized by what appears first in this list,
  * so ideallly we want the lowest level descendants to appear first with the top level nodes
  * appearing last, also you want a groups descedents to appear before the actual group.
- * 
- * The current tooltip code doesn't quite work right in IE7 so I cased it to only work in FF, and 
+ *
+ * The current tooltip code doesn't quite work right in IE7 so I cased it to only work in FF, and
  * use the standard tooltips in IE.  I'll revisit this after the Feb. 09 release.  I'd also like
  * to visit adding a zoom slider similar to google maps and scaling the image map appropriately.
- * 
+ *
  * 3rd level children don't seem to size quite right, need to revisit that as well.  Also, the tooltip
  * code lets us include Image Previews so we shoud look at using that to provide resource previews when
  * its as simple as pointing to a URL.
- * 
+ *
  * Also I'd really like to add some simple templating as having the HTML in java is really cumbersome.
  */
 public class ImageMap extends VueAction {
 
 	public static final int UPPER_LEFT_MARGIN = 30;
 	private int nodeCounter = 0;
-	// Modified by Apollia on Jan. 23, 2017, 4:33 PM, to stop images 
+	// Modified by Apollia on Jan. 23, 2017, 4:33 PM, to stop images
 	// from being scaled down when they're dragged into bubbles.
 	static final float ChildScale = VueResources.getInt("node.child.scale", 100) / 100f;
 //	static final float ChildScale = VueResources.getInt("node.child.scale", 75) / 100f;
@@ -78,7 +78,7 @@ public class ImageMap extends VueAction {
 		if (selectedFile != null)
 			createImageMap(selectedFile,1.0,"png");
 	}
-	
+
 	public void createImageMap(File file,LWMap map,double zoom) {
 		String imageLocation = file.getAbsolutePath().substring(0,
 				file.getAbsolutePath().length() - 5)
@@ -137,7 +137,7 @@ public class ImageMap extends VueAction {
 
 		// createJpeg(imageLocation, "jpeg", currentMap, size);
 		// ImageConversion.createActiveMapJpeg(new File(imageLocation));
-		
+
 		if (format.equals("jpeg"))
 			imageDimensions = ImageConversion.createActiveMapJpeg(imageLocationFile,
 					zoom);
@@ -146,14 +146,14 @@ public class ImageMap extends VueAction {
 				zoom);
 		createHtml(imageName, fileName,zoom);
 	}
-	
+
 	/**
 	 * Returns a string containing the coordinates (x1, y1, x2, y2) for a given
 	 * rectangle. This string is intended for use in an image map.
-	 * 
+	 *
 	 * @param rectangle
 	 *            the rectangle
-	 * 
+	 *
 	 * @return Upper left and lower right corner of a rectangle.
 	 */
 	private String getRectCoords(Rectangle2D rectangle, double zoom) {
@@ -164,14 +164,14 @@ public class ImageMap extends VueAction {
 		int y1 = (int) (rectangle.getY()* zoom);
 		int x2 = (int) (rectangle.getWidth()* zoom);
 		int y2 = (int) (rectangle.getHeight()* zoom);
-		
+
 		if (x2 == x1) {
 			x2++;
 		}
 		if (y2 == y1) {
 			y2++;
 		}
-		
+
 		return x1 + "," + y1 + "," + x2 + "," + y2;
 	}
 
@@ -204,19 +204,19 @@ public class ImageMap extends VueAction {
 		/*
 		 * I'm using an array list to gather all the lines of the image map
 		 * so that I can push things to the top.  Intersecting areas of the image map
-		 * are priortized by what appears first in this list, so ideallly we want 
+		 * are priortized by what appears first in this list, so ideallly we want
 		 * the lowest level descendants to appear first with the top level nodes
-		 * appearing last, also you want a groups descedents to appear before the 
+		 * appearing last, also you want a groups descedents to appear before the
 		 * actual group -MK 2/16/09
 		 */
-	
+
 		java.util.List<String> arrayList = new ArrayList<>();
 		//java.util.ArrayList<LWComponent> comps = new ArrayList<LWComponent>();
-		
+
 		//get the current map.
- 
+
 		 // handle in reverse order (top layer on top)
-        for (LWComponent layer : reverse(map.getChildren())) {         
+        for (LWComponent layer : reverse(map.getChildren())) {
                 //for (LWComponent c : reverse(layer.getChildren()))
 //                for (LWComponent c : reverse()
 
@@ -305,7 +305,7 @@ public class ImageMap extends VueAction {
                 }// end else
 
             }// end while
-		
+
         }
 		String buf = "";
         for (String st : arrayList) {
@@ -317,22 +317,22 @@ public class ImageMap extends VueAction {
     	LWMap currentMap = VUE.getActiveMap();
     	createHtml(imageName,fileName,currentMap,zoom);
     }
-    
+
 	private  void createHtml(String imageName, String fileName,LWMap currentMap,double zoom) {
 
  		Rectangle2D bounds = currentMap.getMapBounds();
 
 		xOffset = (int) bounds.getX() - UPPER_LEFT_MARGIN;
 		yOffset = (int) bounds.getY() - UPPER_LEFT_MARGIN;
-		
+
 		String out = "<html><head><title>" + currentMap.getLabel();
 		out += "</title>";
 		out += "<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js\" type=\"text/javascript\"></script>";
 		out += "<script  type=\"text/javascript\">\n";
 		out += "jQuery.noConflict();\n";
 		out += "</script>\n";
-		out += "<script src=\"http://vue.tufts.edu/htmlexport-includes/jquery.maphilight.min.js\" type=\"text/javascript\"></script>";
-		out += "<script src=\"http://vue.tufts.edu/htmlexport-includes/v3/tooltip.min.js\" type=\"text/javascript\"></script>";
+		// out += "<script src=\"http://vue.tufts.edu/htmlexport-includes/jquery.maphilight.min.js\" type=\"text/javascript\"></script>";
+		// out += "<script src=\"http://vue.tufts.edu/htmlexport-includes/v3/tooltip.min.js\" type=\"text/javascript\"></script>";
 		out += "<script type=\"text/javascript\">";
 		out += "jQuery(function() {jQuery.fn.maphilight.defaults = {\n";
 		out += "         fill: false,\n";
@@ -356,7 +356,7 @@ public class ImageMap extends VueAction {
 		out += "padding:2px 5px;\n";
 		out += "color:#333;\n";
 		out += "display:none;\n";
-		out += "}\n";	
+		out += "}\n";
 		out +="</style>\n";
 		out += "</head><body>\n";
 		out += "<div class=\"example2\">";
